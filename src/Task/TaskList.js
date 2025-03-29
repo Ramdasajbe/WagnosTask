@@ -15,7 +15,6 @@ import TaskStyles from './Styles';
 const TaskList = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  Dimensions;
   const styles = TaskStyles(isDarkMode, Colors, Dimensions);
   const [allDetails, setallDetails] = useState({
     loading: true,
@@ -170,12 +169,12 @@ const TaskList = () => {
         </TouchableOpacity>
       </View>
 
-      <FlatList
+      {/* <FlatList
         style={styles.flatlistContainer}
         data={allDetails.data}
         renderItem={renderItem}
         keyExtractor={item => item.id.toString()} // Ensure valid keyExtractor
-      />
+      /> */}
     </View>
   );
 };
