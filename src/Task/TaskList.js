@@ -169,12 +169,12 @@ const TaskList = () => {
         </TouchableOpacity>
       </View>
 
-      {/* <FlatList
+      <FlatList
         style={styles.flatlistContainer}
         data={allDetails.data}
         renderItem={renderItem}
         keyExtractor={item => item.id.toString()} // Ensure valid keyExtractor
-      /> */}
+      />
     </View>
   );
 };

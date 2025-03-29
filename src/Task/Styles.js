@@ -1,7 +1,7 @@
 const TaskStyles = (isDarkMode, Colors, Dimensions) => {
   return {
+    height: Dimensions.get('window').height,
     container: {
-      flex: 1,
       backgroundColor: isDarkMode ? Colors.dark : Colors.white,
     },
     loadingContainer: {
