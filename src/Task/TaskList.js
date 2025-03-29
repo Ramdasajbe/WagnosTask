@@ -27,57 +27,59 @@ const TaskList = () => {
     incompleted: false,
   });
 
-  const getAllTask = async status => {
-    try {
-      setallDetails({loading: true, data: [], error: null});
-      setborderLine({
-        all: status === 'all',
-        completed: status === true,
-        incompleted: status === false,
-      });
-      // Define the API endpoint
-      const apiUrl = 'https://jsonplaceholder.typicode.com/todos';
+  const getAllTask = status => {
+    setallDetails({loading: true, data: [], error: null});
+    setborderLine({
+      all: status === 'all',
+      completed: status === true,
+      incompleted: status === false,
+    });
 
-      // Fetch the data from the API
-      const response = await axios.get(apiUrl);
+    const apiUrl = 'https://jsonplaceholder.typicode.com/todos';
 
-      // Handle the response based on status and data format
-      if (response.status !== 200) {
-        setallDetails({
-          loading: false,
-          data: [],
-          error: 'Network response was not ok',
-        });
-      } else if (Array.isArray(response.data)) {
-        if (response.data.length > 0) {
+    // Fetch the data using axios with then() and catch()
+    axios
+      .get(apiUrl)
+      .then(response => {
+        // Handle the response based on status and data format
+        if (response.status !== 200) {
           setallDetails({
             loading: false,
-            data: response.data.filter((item, index) =>
-              typeof status == 'boolean' ? item.completed === status : item,
-            ),
-            error: null,
+            data: [],
+            error: 'Network response was not ok',
           });
+        } else if (Array.isArray(response.data)) {
+          if (response.data.length > 0) {
+            setallDetails({
+              loading: false,
+              data: response.data.filter(item =>
+                typeof status === 'boolean' ? item.completed === status : item,
+              ),
+              error: null,
+            });
+          } else {
+            setallDetails({
+              loading: false,
+              data: [],
+              error: 'No data found',
+            });
+          }
         } else {
           setallDetails({
             loading: false,
             data: [],
-            error: 'No data found',
+            error: 'Unexpected response format',
           });
         }
-      } else {
+      })
+      .catch(error => {
+        // Handle any errors from the axios request
         setallDetails({
           loading: false,
           data: [],
-          error: 'Unexpected response format',
+          error: error.message,
         });
-      }
-    } catch (error) {
-      setallDetails({
-        loading: false,
-        data: [],
-        error: error.message,
       });
-    }
   };
 
   useEffect(() => {
